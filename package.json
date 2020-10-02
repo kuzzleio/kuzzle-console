@@ -45,6 +45,8 @@
     "kuzzle-sdk-v7": "npm:kuzzle-sdk@^7.4.0",
     "lodash": "^4.17.11",
     "moment": "^2.22.1",
+    "monaco-editor-vue": "^1.0.10",
+    "monaco-editor-webpack-plugin": "^1.9.1",
     "node-sass": "^4.14.1",
     "prettier-eslint": "^9.0.1",
     "sass-loader": "^7.1.0",
