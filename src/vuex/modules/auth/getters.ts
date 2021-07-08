@@ -178,6 +178,24 @@ export const getters = createGetters<AuthState>()({
       getters.canDeleteDocument(index, collection)
   },
 
+  // API Keys
+  canSearchApiKey(state) {
+    return isActionAllowed(state.user, 'security', 'searchApiKeys')
+  },
+  canCreateApiKey(state) {
+    return isActionAllowed(state.user, 'security', 'createApiKey')
+  },
+  canDeleteApiKey(state) {
+    return isActionAllowed(state.user, 'security', 'deleteApiKey')
+  },
+  canManageApiKeys(state, getters) {
+    return (
+      getters.canSearchApiKey ||
+      getters.canCreateApiKey ||
+      getters.canDeleteApiKey
+    )
+  },
+
   // Roles
   canReadRole(state) {
     return isActionAllowed(state.user, 'security', 'getRole')

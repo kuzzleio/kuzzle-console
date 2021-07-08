@@ -14,6 +14,7 @@
             'SecurityUsersList',
             'SecurityUsersCreate',
             'SecurityUsersUpdate',
+            'SecurityUsersDetails',
             'SecurityUsersEditCustomMapping'
           ])
         "

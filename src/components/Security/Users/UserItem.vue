@@ -2,12 +2,12 @@
   <div data-cy="UserItem" class="UserItem">
     <b-container fluid class="UserItem-container">
       <div class="UserItem-toggle-select mr-3">
-        <i
+        <!-- <i
           aria-role="button"
           :class="`fa fa-caret-${expanded ? 'down' : 'right'} mr-2 `"
           :data-cy="`UserItem-${document.id}--toggle`"
-          @click="toggleCollapse"
-        />
+        /> -->
+        <!-- @click="toggleCollapse" -->
         <b-form-checkbox
           type="checkbox"
           value="true"
@@ -19,12 +19,11 @@
         />
       </div>
       <div class="UserItem-title">
-        <div class="UserItem-title-info">
-          <a
-            class="d-inline-block align-middle code pointer mr-2"
-            @click="toggleCollapse"
-            >{{ document.id }}</a
-          >
+        <div class="UserItem-title-info" @click="userDetails(document.id)">
+          <a class="d-inline-block align-middle code pointer mr-2">{{
+            document.id
+          }}</a>
+          <!-- @click="toggleCollapse" -->
           <span
             v-if="localStrategyUsername"
             :data-cy="`local-strategy-username-${localStrategyUsername}`"
@@ -36,8 +35,8 @@
             />
             {{ localStrategyUsername }}
           </span>
+          <!-- @click="toggleCollapse" -->
           <label
-            @click="toggleCollapse"
             v-if="
               document.additionalAttribute && document.additionalAttribute.value
             "
@@ -65,6 +64,32 @@
         </div>
       </div>
       <div class="UserItem-actions">
+        <b-button
+          :id="`tooltip-${document.id}`"
+          class="UserListItem-infos"
+          href=""
+          variant="link"
+          title="User infos"
+        >
+          <i class="fa fa-file-code" />
+        </b-button>
+        <b-tooltip
+          placement="bottom"
+          bg-variant="dark"
+          triggers="hover"
+          :target="`tooltip-${document.id}`"
+          custom-class="UserItem-tooltip"
+        >
+          <b-card no-body bg-variant="dark">
+            <pre
+              v-json-formatter="{
+                content: document,
+                open: true,
+                config: { theme: 'dark' }
+              }"
+            />
+          </b-card>
+        </b-tooltip>
         <b-button
           class="UserListItem-update"
           href=""
@@ -95,13 +120,13 @@
         </b-button>
       </div>
     </b-container>
-    <b-collapse
+    <!-- <b-collapse
       :id="`collapse-${document.id}`"
       v-model="expanded"
       class="ml-3 DocumentListItem-content"
     >
       <pre v-json-formatter="{ content: document, open: true }" />
-    </b-collapse>
+    </b-collapse> -->
   </div>
 </template>
 
@@ -123,7 +148,7 @@ export default {
   },
   data() {
     return {
-      expanded: false,
+      // expanded: false,
       checked: false
     }
   },
@@ -156,9 +181,9 @@ export default {
     }
   },
   methods: {
-    toggleCollapse() {
-      this.expanded = !this.expanded
-    },
+    // toggleCollapse() {
+    //   this.expanded = !this.expanded
+    // },
     notifyCheckboxClick() {
       this.$emit('checkbox-click', this.document.id)
     },
@@ -171,13 +196,30 @@ export default {
       if (this.canEditUser) {
         this.$emit('edit', this.document.id)
       }
+    },
+    userDetails(id) {
+      this.$router.push({
+        name: 'SecurityUsersDetails',
+        params: { id }
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
+::v-deep .tooltip-inner {
+  max-width: 600px;
+  text-align: left;
+  background-color: #343a40;
+}
 .UserItem {
+  &-tooltip {
+    max-width: 600px;
+    max-height: 600px;
+    opacity: 1;
+  }
+
   &-container {
     display: flex;
     flex-direction: row;

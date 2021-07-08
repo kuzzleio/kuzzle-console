@@ -43,6 +43,17 @@ export default [
     props: route => ({ id: route.params.id })
   },
   {
+    path: '/security/users/details/:id',
+    name: 'SecurityUsersDetails',
+    meta: {
+      section: 'users'
+    },
+    component(resolve) {
+      require(['../../components/Security/Users/Details'], resolve)
+    },
+    props: route => ({ id: route.params.id })
+  },
+  {
     path: '/security/profiles',
     name: 'SecurityProfilesList',
     meta: {
